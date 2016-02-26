@@ -2,29 +2,14 @@ package coffeemate.chris.app.coffeemateclub.app;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ListView;
 
 import coffeemate.chris.app.coffeemateclub.R;
 import coffeemate.chris.app.coffeemateclub.adapter.CustomListAdapter;
 
-import android.app.ActionBar;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import coffeemate.chris.app.coffeemateclub.R;
-import coffeemate.chris.app.coffeemateclub.adapter.CustomListAdapter;
-import coffeemate.chris.app.coffeemateclub.model.Movie;
+import coffeemate.chris.app.coffeemateclub.model.Coffee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -55,7 +33,7 @@ public class MainActivityList extends AppCompatActivity {
     // Movies json url
     private static final String url = "http://api.androidhive.info/json/movies.json";
     private ProgressDialog pDialog;
-    private List<Movie> movieList = new ArrayList<Movie>();
+    private List<Coffee> coffeeList = new ArrayList<Coffee>();
     private ListView listView;
     private CustomListAdapter adapter;
 
@@ -67,7 +45,7 @@ public class MainActivityList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.list);
-        adapter = new CustomListAdapter(this, movieList);
+        adapter = new CustomListAdapter(this, coffeeList);
         listView.setAdapter(adapter);
 
         pDialog = new ProgressDialog(this);
@@ -93,12 +71,12 @@ public class MainActivityList extends AppCompatActivity {
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);
-                                Movie movie = new Movie();
-                                movie.setTitle(obj.getString("title"));
-                                movie.setThumbnailUrl(obj.getString("image"));
-                                movie.setRating(((Number) obj.get("rating"))
+                                Coffee coffee = new Coffee();
+                                coffee.setTitle(obj.getString("title"));
+                                coffee.setThumbnailUrl(obj.getString("image"));
+                                coffee.setRating(((Number) obj.get("rating"))
                                         .doubleValue());
-                                movie.setYear(obj.getInt("releaseYear"));
+                                coffee.setYear(obj.getInt("releaseYear"));
 
                                 // Genre is json array
                                 JSONArray genreArry = obj.getJSONArray("genre");
@@ -106,10 +84,10 @@ public class MainActivityList extends AppCompatActivity {
                                 for (int j = 0; j < genreArry.length(); j++) {
                                     genre.add((String) genreArry.get(j));
                                 }
-                                movie.setGenre(genre);
+                                coffee.setGenre(genre);
 
-                                // adding movie to movies array
-                                movieList.add(movie);
+                                // adding coffee to movies array
+                                coffeeList.add(coffee);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

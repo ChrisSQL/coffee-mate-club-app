@@ -1,18 +1,10 @@
 package coffeemate.chris.app.coffeemateclub.app;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import coffeemate.chris.app.coffeemateclub.R;
 import coffeemate.chris.app.coffeemateclub.adapter.CustomListAdapter;
-import coffeemate.chris.app.coffeemateclub.model.Movie;
+import coffeemate.chris.app.coffeemateclub.model.Coffee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +15,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
@@ -42,9 +31,9 @@ public class MainActivity extends Activity {
 
 
     // Movies json url
-    private static final String url = "http://api.androidhive.info/json/movies.json";
+    private static final String url = "http://www.coffeemate.club/api/coffees";
     private ProgressDialog pDialog;
-    private List<Movie> movieList = new ArrayList<Movie>();
+    private List<Coffee> coffeeList = new ArrayList<Coffee>();
     private ListView listView;
     private CustomListAdapter adapter;
 
@@ -54,7 +43,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.list);
-        adapter = new CustomListAdapter(this, movieList);
+        adapter = new CustomListAdapter(this, coffeeList);
         listView.setAdapter(adapter);
 
         pDialog = new ProgressDialog(this);
@@ -81,23 +70,17 @@ public class MainActivity extends Activity {
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);
-                                Movie movie = new Movie();
-                                movie.setTitle(obj.getString("title"));
-                                movie.setThumbnailUrl(obj.getString("image"));
-                                movie.setRating(((Number) obj.get("rating"))
-                                        .doubleValue());
-                                movie.setYear(obj.getInt("releaseYear"));
+                                double roundOff1 = (int) obj.get("price");
+                                double roundOff2 = Math.round(roundOff1 * 100.0) / 100.0;
+                                Coffee coffee = new Coffee();
+                                coffee.setTitle(obj.getString("title"));
+                                coffee.setBrand(obj.getString("brand"));
+                                coffee.setThumbnailUrl(obj.getString("urlimage"));
+                                coffee.setRating((roundOff2));
+                                coffee.setYear(obj.getInt("votes"));
 
-                                // Genre is json array
-                                JSONArray genreArry = obj.getJSONArray("genre");
-                                ArrayList<String> genre = new ArrayList<String>();
-                                for (int j = 0; j < genreArry.length(); j++) {
-                                    genre.add((String) genreArry.get(j));
-                                }
-                                movie.setGenre(genre);
-
-                                // adding movie to movies array
-                                movieList.add(movie);
+                                // adding coffee to movies array
+                                coffeeList.add(coffee);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

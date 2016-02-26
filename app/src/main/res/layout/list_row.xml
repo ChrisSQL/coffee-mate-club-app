@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_row_selector"
+    android:background="#dddddd"
     android:padding="8dp" >
 
     <!-- Thumbnail Image -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="140dp"
+        android:layout_margin="0dp"
+        android:background="#ffffff">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/thumbnail"
@@ -26,47 +28,55 @@
             android:textSize="15dp"
             android:textStyle="bold"
             android:text="title"
-            android:layout_below="@+id/rating"
+            android:layout_below="@+id/price"
             android:layout_alignParentStart="true"
             android:padding="5dp"
-            android:textColor="#8C662E" />
+            android:textColor="#000000"
+            android:layout_toStartOf="@+id/thumbnail"
+            android:layout_marginRight="10dp" />
 
         <TextView
-            android:id="@+id/releaseYear"
+            android:id="@+id/votes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fe0000"
+            android:textColor="#ffffff"
             android:textSize="15dp"
-            android:text="year"
+            android:text="votes"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:padding="5dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rating"
-            android:text="rating"
-            android:layout_below="@+id/releaseYear"
-            android:layout_alignParentStart="true"
-            android:padding="5dp"
-            android:textSize="17dp"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:background="#8c662e"
+            android:layout_margin="2dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/genre"
-            android:text="genre"
+            android:id="@+id/price"
+            android:text="price"
             android:padding="5dp"
             android:textSize="15dp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/rating" />
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_alignBottom="@+id/votes"
+            android:layout_toEndOf="@+id/votes"
+            android:layout_margin="2dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="brand"
+            android:id="@+id/brand"
+            android:layout_below="@+id/title"
+            android:layout_alignParentStart="true"
+            android:padding="5dp"
+            android:textColor="#8C662E"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp" />
+
     </RelativeLayout>
 
-    <!-- Movie Title -->
+    <!-- Coffee Title -->
 
     <!-- Rating -->
 

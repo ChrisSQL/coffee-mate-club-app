@@ -1,5 +1,6 @@
 package coffeemate.chris.app.coffeemateclub.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import coffeemate.chris.app.coffeemateclub.R;
@@ -17,7 +18,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,14 +32,13 @@ public class MainActivity extends Activity {
     // Log tag
     private static final String TAG = MainActivity.class.getSimpleName();
 
-
-
-    // Movies json url
+    // Coffees json url
     private static final String url = "http://www.coffeemate.club/api/coffees";
     private ProgressDialog pDialog;
     private List<Coffee> coffeeList = new ArrayList<Coffee>();
     private ListView listView;
     private CustomListAdapter adapter;
+    private Coffee coffee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,19 @@ public class MainActivity extends Activity {
         pDialog.setMessage("Loading...");
         pDialog.show();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent detailIntent = new Intent(MainActivity.this, MainActivityList.class);
+                detailIntent.putExtra("id", coffeeList.get(position).getId());
+                startActivity(detailIntent);
+
+
+            }
+        });
 
         // changing action bar color
 //        getActionBar().setBackgroundDrawable(
@@ -65,19 +80,21 @@ public class MainActivity extends Activity {
                         Log.d(TAG, response.toString());
                         hidePDialog();
 
+
+
                         // Parsing json
                         for (int i = 0; i < response.length(); i++) {
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);
-                                double roundOff1 = (int) obj.get("price");
-                                double roundOff2 = Math.round(roundOff1 * 100.0) / 100.0;
-                                Coffee coffee = new Coffee();
+                                coffee = new Coffee();
+                                coffee.setId(obj.getString("_id"));
                                 coffee.setTitle(obj.getString("title"));
+                                coffee.setMarketingtext(obj.getString("marketingtext"));
                                 coffee.setBrand(obj.getString("brand"));
                                 coffee.setThumbnailUrl(obj.getString("urlimage"));
-                                coffee.setRating((roundOff2));
-                                coffee.setYear(obj.getInt("votes"));
+                                coffee.setVotes(obj.getInt("votes"));
+                                coffee.setPrice(obj.getInt("price"));
 
                                 // adding coffee to movies array
                                 coffeeList.add(coffee);

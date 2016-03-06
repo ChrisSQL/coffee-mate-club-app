@@ -1,14 +1,10 @@
 package coffeemate.chris.app.coffeemateclub.app;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 
 import coffeemate.chris.app.coffeemateclub.R;
-import coffeemate.chris.app.coffeemateclub.adapter.CustomListAdapter;
-
+import coffeemate.chris.app.coffeemateclub.adapter.CustomListAdapterList;
 import coffeemate.chris.app.coffeemateclub.model.Coffee;
 
 import java.util.ArrayList;
@@ -18,45 +14,49 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
-public class MainActivityList extends AppCompatActivity {
-
+public class MainActivityList extends Activity {
     // Log tag
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    // Movies json url
-    private static final String url = "http://api.androidhive.info/json/movies.json";
+    // Coffees json url
+    private static final String url = "http://www.coffeemate.club/api/coffees";
     private ProgressDialog pDialog;
     private List<Coffee> coffeeList = new ArrayList<Coffee>();
     private ListView listView;
-    private CustomListAdapter adapter;
+    private CustomListAdapterList adapter;
+    private Coffee coffee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_main_list);
 
-        listView = (ListView) findViewById(R.id.list);
-        adapter = new CustomListAdapter(this, coffeeList);
+        Intent intent = getIntent();
+        final String id = intent.getStringExtra("id");
+
+
+        listView = (ListView) findViewById(R.id.list1);
+        adapter = new CustomListAdapterList(this, coffeeList);
         listView.setAdapter(adapter);
 
         pDialog = new ProgressDialog(this);
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
         pDialog.show();
-
-
-
-        // changing action bar color
-
 
         // Creating volley request obj
         JsonArrayRequest movieReq = new JsonArrayRequest(url,
@@ -66,28 +66,28 @@ public class MainActivityList extends AppCompatActivity {
                         Log.d(TAG, response.toString());
                         hidePDialog();
 
+
                         // Parsing json
                         for (int i = 0; i < response.length(); i++) {
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);
-                                Coffee coffee = new Coffee();
-                                coffee.setTitle(obj.getString("title"));
-                                coffee.setThumbnailUrl(obj.getString("image"));
-                                coffee.setRating(((Number) obj.get("rating"))
-                                        .doubleValue());
-                                coffee.setYear(obj.getInt("releaseYear"));
 
-                                // Genre is json array
-                                JSONArray genreArry = obj.getJSONArray("genre");
-                                ArrayList<String> genre = new ArrayList<String>();
-                                for (int j = 0; j < genreArry.length(); j++) {
-                                    genre.add((String) genreArry.get(j));
+                                if (obj.getString("_id").equals(id)) {
+
+                                    coffee = new Coffee();
+                                    coffee.setId(obj.getString("_id"));
+                                    coffee.setTitle(obj.getString("title"));
+                                    coffee.setMarketingtext(obj.getString("marketingtext"));
+                                    coffee.setBrand(obj.getString("brand"));
+                                    coffee.setThumbnailUrl(obj.getString("urlimage"));
+                                    coffee.setVotes(obj.getInt("votes"));
+                                    coffee.setPrice(obj.getInt("price"));
+
+                                    // adding coffee to movies array
+                                    coffeeList.add(coffee);
+
                                 }
-                                coffee.setGenre(genre);
-
-                                // adding coffee to movies array
-                                coffeeList.add(coffee);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -125,11 +125,11 @@ public class MainActivityList extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
 }

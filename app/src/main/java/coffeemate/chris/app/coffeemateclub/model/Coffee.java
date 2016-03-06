@@ -8,30 +8,44 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class Coffee {
-    private String title, thumbnailUrl, brand;
-    private int year;
-    private double rating;
-    private ArrayList<String> genre;
+    private String id, title, thumbnailUrl, brand, marketingtext;
+    private int votes, price;
 
     public Coffee() {
     }
 
-    public Coffee(String name, String thumbnailUrl, String brand, int year, double rating,
-                  ArrayList<String> genre) {
-        this.title = name;
+    public Coffee(String id, String title, String thumbnailUrl, String brand, String marketingtext, int votes, int price) {
+        this.id = id;
+        this.title = title;
         this.thumbnailUrl = thumbnailUrl;
-        this.year = year;
-        this.rating = rating;
-        this.genre = genre;
         this.brand = brand;
+        this.marketingtext = marketingtext;
+        this.votes = votes;
+        this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String name) {
-        this.title = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getBrand() {
@@ -42,49 +56,27 @@ public class Coffee {
         this.brand = brand;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public String getMarketingtext() {
+        return marketingtext;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-
-        if(thumbnailUrl.substring(0,3).equals("./mo") ){
-
-            Log.d("thumbnailUrl ====== ",thumbnailUrl);
-            thumbnailUrl = "http://www.coffeemate.club/" + thumbnailUrl.substring(2);
-            Log.d("thumbnailUrl ====== ",thumbnailUrl);
-
-        }
-
-        this.thumbnailUrl = thumbnailUrl;
+    public void setMarketingtext(String marketingtext) {
+        this.marketingtext = marketingtext;
     }
 
-    public int getYear() {
-        return year;
+    public int getVotes() {
+        return votes;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 
-    public double getRating() {
-
-        return rating;
+    public int getPrice() {
+        return price;
     }
 
-    public void setRating(double rating) {
-
-
-
-        this.rating = rating;
+    public void setPrice(int price) {
+        this.price = price;
     }
-
-    public ArrayList<String> getGenre() {
-        return genre;
-    }
-
-    public void setGenre(ArrayList<String> genre) {
-        this.genre = genre;
-    }
-
 }

@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".app.MainActivityList"
-            android:label="@string/title_activity_main_activity_list">
+            android:label="CoffeeMate">
 
         </activity>
     </application>

@@ -59,12 +59,12 @@ public class CustomListAdapter extends BaseAdapter {
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
-        NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
+        NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView brand = (TextView) convertView.findViewById(R.id.brand);
-        TextView rating = (TextView) convertView.findViewById(R.id.price);
-        TextView year = (TextView) convertView.findViewById(R.id.votes);
+        TextView price = (TextView) convertView.findViewById(R.id.price);
+        TextView votes = (TextView) convertView.findViewById(R.id.votes);
 
         // getting coffee data for the row
         Coffee m = coffeeItems.get(position);
@@ -79,10 +79,10 @@ public class CustomListAdapter extends BaseAdapter {
         brand.setText(m.getBrand());
 
         // rating
-        rating.setText("€" + String.valueOf(m.getRating())+"0");
+        price.setText("€" + String.valueOf(m.getPrice())+".00");
 
         // release year
-        year.setText(String.valueOf(m.getYear()));
+        votes.setText(String.valueOf(m.getVotes()));
 
         return convertView;
     }

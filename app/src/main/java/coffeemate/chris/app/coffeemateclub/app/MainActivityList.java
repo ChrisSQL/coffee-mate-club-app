@@ -69,6 +69,9 @@ public class MainActivityList extends Activity {
 
                         // Parsing json
                         for (int i = 0; i < response.length(); i++) {
+
+
+
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);

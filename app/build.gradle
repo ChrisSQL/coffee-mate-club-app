@@ -8,8 +8,8 @@ android {
         applicationId "coffeemate.chris.app.coffeemateclub"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2"
     }
     buildTypes {
         release {
@@ -22,7 +22,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+
+    compile files('libs/volley.jar')
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
-    compile files('libs/volley.jar')
+    compile 'com.android.support:support-v4:23.2.0'
 }

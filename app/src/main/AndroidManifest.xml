@@ -7,22 +7,32 @@
     <application
         android:name=".app.AppController"
         android:allowBackup="true"
-        android:icon="@drawable/j2"
+        android:icon="@mipmap/ic_launcher"
         android:label="CoffeeMate"
         android:supportsRtl="true">
         <activity
-            android:name=".app.MainActivity"
-            android:label="CoffeeMate">
+            android:name=".app.SplashScreen"
+            android:label="CoffeeMate"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.MainActivityList"
+            android:name=".app.MainActivity"
             android:label="CoffeeMate">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
+        <activity
+            android:name=".app.MainActivityList"
+            android:label="CoffeeMate"></activity>
     </application>
 
 </manifest>

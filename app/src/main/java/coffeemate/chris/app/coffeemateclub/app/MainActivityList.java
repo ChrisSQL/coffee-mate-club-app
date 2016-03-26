@@ -43,7 +43,7 @@ public class MainActivityList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_list);
+        setContentView(R.layout.activity_main_list_detail);
 
         Intent intent = getIntent();
         final String id = intent.getStringExtra("id");
